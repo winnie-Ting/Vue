@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <div class="box">
+        <input type="text" v-focus><br/>
+    </div>
+
+    <div id="container">
+
+        <input type="text" v-color='msg'><br/>
+        <input type="text" v-color1='msg'>
+        <button>btn</button>
+    </div>
+</body>
+<script src="js/jquery-1.12.4.js"></script>
+<script src="js/vue.js"></script>
+<script>
+    // 自定义指令
+    Vue.directive('focus', {
+            inserted: function(el) {
+                //el:绑定指令的元素
+                el.focus();
+            }
+        })
+        //带参数的自定义指令
+    Vue.directive('color', {
+        bind: function(el, binding) {
+            //binding是一个对象
+            // el.style.backgroundColor = binding.value
+            el.style.backgroundColor = binding.value.color
+        }
+    })
+    var vm1 = new Vue({
+        el: '.box',
+        data: {
+
+        },
+        methods: {
+
+        }
+    })
+    var vm = new Vue({
+        el: '#container',
+        data: {
+            // msg: 'pink'
+            msg: {
+                color: 'pink',
+                color1: 'red'
+            }
+        },
+        methods: {
+
+        },
+        directives: {
+            color1: {
+                bind: function(el, binding) {
+                    el.style.backgroundColor = binding.value.color1
+                }
+            },
+            focus1: {
+                inserted: function(el) {
+                    el.focus()
+                }
+            }
+        }
+    })
+</script>
+
+</html>

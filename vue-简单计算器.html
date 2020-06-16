@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>计算器</title>
+</head>
+
+<body>
+    <div id="container">
+        <h1>简单计算器</h1>
+        <div>
+            数值A:
+            <input type="text" v-model='a'>
+        </div>
+        <div>
+            数值B:
+            <input type="text" v-model='b'>
+        </div>
+        <input type="button" v-on:click='result' value="计算">
+        <p>计算结果：{{figure}}</p>
+    </div>
+
+    <script src="js/jquery-1.12.4.js"></script>
+    <script src="js/vue.js"></script>
+    <script>
+        var vm = new Vue({
+            el: '#container',
+            data: {
+                a: '',
+                b: '',
+                figure: ''
+            },
+            methods: {
+                result: function() {
+                    //实现计算逻辑
+                    this.figure = parseInt(this.a) + parseInt(this.b);
+                }
+            }
+        })
+    </script>
+</body>
+
+</html>

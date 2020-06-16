@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>数据绑定</title>
+    <!-- v-text v-html v-pre v-once -->
+    <style>
+        [v-cloak] {
+            display: none;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="content">
+        <div v-cloak>{{msg}}</div>
+        <div v-text='msg'></div>
+        <div v-html='msg2'></div>
+        <div v-pre=>{{msg}}</div>
+        <div v-once>{{msg3}}</div>
+    </div>
+    <script src="js/jquery-1.12.4.js"></script>
+    <script src="js/vue.js"></script>
+    <script>
+        var vm = new Vue({
+            el: '.content',
+            data: {
+                msg: 'Hello Vue',
+                msg2: '<h1>HTML</h1>',
+                msg3: 'hello' //无响应式，页面不再跟着数据的设置而变化
+            }
+        });
+    </script>
+</body>
+
+</html>

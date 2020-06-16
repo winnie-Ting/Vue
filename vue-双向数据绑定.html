@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>v-model</title>
+</head>
+
+<body>
+    <div class="content">
+        <div>{{msg}}</div>
+        <div>
+            <input type="text" v-model='msg'>
+        </div>
+    </div>
+    <script src="js/jquery-1.12.4.js"></script>
+    <script src="js/vue.js"></script>
+    <script>
+        var vm = new Vue({
+            el: '.content',
+            data: {
+                msg: 'Hello Vue'
+            }
+        });
+    </script>
+</body>
+
+</html>

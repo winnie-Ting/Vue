@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>v-cloak</title>
+    <style>
+        [v-cloak] {
+            display: none;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="content">
+        <div v-cloak>{{msg}}</div>
+    </div>
+    <script src="js/jquery-1.12.4.js"></script>
+    <script src="js/vue.js"></script>
+    <script>
+        // v - cloak的用法（ 解决插值表达式的“ 闪动”）
+        // 1. 提供样式
+        //     [v - cloak] {
+        //         display: none;
+        //     }
+        // 2. 在插值表达式的标签中添加自定义属性：v-cloak
+        // 原理： 先通过样式隐藏内容， 等在内存中完成值的替换后再显示出来
+        var vm = new Vue({
+            el: '.content',
+            data: {
+                msg: 'Hello Vue'
+            }
+        });
+    </script>
+</body>
+
+</html>

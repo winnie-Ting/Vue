@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>样式绑定：对象语法</title>
+    <style>
+        .rim {
+            width: 100px;
+            height: 100px;
+            border: 1px solid red;
+        }
+        
+        .bgc {
+            background-color: pink;
+            margin: 10px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="content">
+        <div v-bind:class="{rim:isRim,bgc:isBgc}">今天天气好晴朗</div>
+        <div v-bind:class="objClasses">今天天气好晴朗</div>
+        <button v-on:click='handle'>change</button>
+    </div>
+    <script src="js/jquery-1.12.4.js"></script>
+    <script src="js/vue.js"></script>
+    <script>
+        var vm = new Vue({
+            el: '.content',
+            data: {
+                isRim: true,
+                isBgc: true,
+                objClasses: {
+                    rim: true,
+                    bgc: true
+                }
+            },
+            methods: {
+                handle: function() {
+                    this.objClasses.bgc = false
+                }
+            }
+        })
+    </script>
+</body>
+
+</html>

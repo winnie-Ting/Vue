@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>按键修饰符</title>
+</head>
+
+<body>
+    <div id="content">
+        <form action="">
+            <div>
+                用户名:
+                <input type="text" v-on:keyup.delete='clear' v-model='username'>
+            </div>
+            <div>
+                密码:
+                <input type="password" v-on:keyup.enter='handleContent' v-model='password'>
+            </div>
+            <div>
+                <input type="button" v-on:click='handleContent' value="submit">
+            </div>
+        </form>
+        <input type="text" v-on:keyup.home='handle'>
+    </div>
+
+    <script src="js/jquery-1.12.4.js"></script>
+    <script src="js/vue.js"></script>
+    <script>
+        Vue.config.keyCodes.home = 36;
+        var vm = new Vue({
+            el: '#content',
+            data: {
+                username: '',
+                password: ''
+            },
+            methods: {
+                handleContent: function() {
+                    console.log(this.username, this.password);
+                },
+                clear: function() {
+                    this.username = ''
+                },
+                handle: function() {
+                    console.log(123);
+                }
+            }
+        });
+    </script>
+</body>
+
+</html>

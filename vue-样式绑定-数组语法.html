@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>样式绑定：数组语法</title>
+    <style>
+        .rim {
+            width: 100px;
+            height: 100px;
+            border: 1px solid red;
+            margin: 10px;
+        }
+        
+        .bgc {
+            background-color: pink;
+        }
+        
+        .text {
+            font-size: 20px;
+            text-align: center;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="content">
+        <div v-bind:class="[rimClass,bgcClass]">今天天气好晴朗</div>
+        <div v-bind:class="arrClasses">今天天气好晴朗</div>
+        <div class="text" v-bind:class="arrClasses">今天天气好晴朗</div>
+        <button v-on:click='handle'>change</button>
+    </div>
+    <script src="js/jquery-1.12.4.js"></script>
+    <script src="js/vue.js"></script>
+    <script>
+        var vm = new Vue({
+            el: '.content',
+            data: {
+                rimClass: 'rim',
+                bgcClass: 'bgc',
+                arrClasses: ['rim', 'bgc']
+            },
+            methods: {
+                handle: function() {
+                    // this.rimClass='',
+                    // this.bgcClass=''
+
+                    this.arrClasses = ['rim']
+                }
+            }
+        })
+    </script>
+</body>
+
+</html>

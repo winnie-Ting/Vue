@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>音乐列表</title>
+    <link rel="stylesheet" href="css/music.css">
+    <style>
+        [v-cloak] {
+            display: none;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <div class="lib">
+            <h1>音乐列表</h1>
+            <div>
+                <div class="nav">
+                    <div>
+                        <label for="id">
+                          编号：
+                      </label>
+                        <input type="text" id="id" v-model='id' :disabled='flag' v-focus>
+                        <label for="name">
+                          名称：
+                      </label>
+                        <input type="text" id="name" v-model='name'>
+                        <button :disabled="submitFlag" @click='handle'>提交</button>
+                    </div>
+                </div>
+            </div>
+            <div class="total">
+                <span>图书总数：</span>
+                <span v-cloak>{{total}}</span>
+            </div>
+            <table>
+                <thead>
+                    <th>编号</th>
+                    <th>名称</th>
+                    <th>时间</th>
+                    <th>操作</th>
+                </thead>
+                <tbody>
+                    <tr :key='items.id' v-for='(items) in music'>
+                        <td v-cloak>{{items.id}}</td>
+                        <td v-cloak>{{items.name}}</td>
+                        <td v-cloak>{{items.date|format('yyyy-MM-dd hh:mm:ss')}}</td>
+                        <td v-cloak>
+                            <a href="javascript:;" @click.prevent='edit(items.id)'>修改</a>
+                            <span>|</span>
+                            <a href="javascript:;" @click.prevent='deleteMusic(items.id)'>删除</a>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <script src="js/vue.js"></script>
+    <script src="js/jquery-1.12.4.js"></script>
+    <script>
+        Vue.directive('focus', {
+            inserted: function(el) {
+                el.focus();
+            }
+        })
+
+        Vue.filter('format', function(value, arg) {
+            function dateFormatX(date, format) {
+                if (typeof date === "string") {
+                    var mts = date.match(/(\/Date\((\d+)\)\/)/);
+                    if (mts && mts.length >= 3) {
+                        date = parseInt(mts[2]);
+                    }
+                }
+                date = new Date(date);
+                if (!date || date.toUTCString() == "Invalid Date") {
+                    return "";
+                }
+                var map = {
+                    "M": date.getMonth() + 1, //月份 
+                    "d": date.getDate(), //日 
+                    "h": date.getHours(), //小时 
+                    "m": date.getMinutes(), //分 
+                    "s": date.getSeconds(), //秒 
+                    "q": Math.floor((date.getMonth() + 3) / 3), //季度 
+                    "S": date.getMilliseconds() //毫秒 
+                };
+                format = format.replace(/([yMdhmsqS])+/g, function(all, t) {
+                    var v = map[t];
+                    if (v !== undefined) {
+                        if (all.length > 1) {
+                            v = '0' + v;
+                            v = v.substr(v.length - 2);
+                        }
+                        return v;
+                    } else if (t === 'y') {
+                        return (date.getFullYear() + '').substr(4 - all.length);
+                    }
+                    return all;
+                });
+                return format;
+            }
+            return dateFormatX(value, arg);
+        })
+
+        var vm = new Vue({
+            el: '.container',
+            data: {
+                id: '',
+                name: '',
+                flag: false,
+                submitFlag: true,
+                music: ''
+            },
+            methods: {
+                handle: function() {
+                    if (this.flag) {
+                        //编辑操作
+                        //根据当前的id去操作数组中对应的数据
+                        //some()遍历数组，看是否有符合条件的，有一个就返回
+                        this.music.some((item) => {
+                            // console.log(this);//要修改的数据
+                            // console.log(item);//数组中遍历到的数据
+                            if (item.id == this.id) {
+                                item.name = this.name;
+                            }
+                        })
+                        this.flag = false;
+                    } else {
+                        var newMusic = {};
+                        newMusic.id = this.id;
+                        newMusic.name = this.name;
+                        newMusic.date = new Date();
+                        this.music.push(newMusic);
+
+                    }
+                    this.id = '';
+                    this.name = '';
+                },
+                edit: function(id) {
+                    //根据id查询出要修改的对象
+                    var eMusic = this.music.filter(function(item) {
+                        return item.id == id; //过滤music中出符合条件的对象
+
+                    });
+                    // console.log(eMusic);是个数组
+                    this.id = eMusic[0].id;
+                    this.name = eMusic[0].name;
+                    this.flag = true;
+                },
+                deleteMusic: function(id) {
+                    //删除数据
+                    //filter()返回的是符合条件的对象
+                    // this.music = this.music.filter(function(item) {
+                    //     return item.id != id;
+                    // })
+                    // findIndex返回的是索引值
+                    var index = this.music.findIndex(function(item) {
+                        return item.id = id;
+                    });
+                    this.music.splice(index, 1);
+
+                }
+            },
+            computed: {
+                total: function() {
+                    return this.music.length;
+                }
+            },
+            watch: {
+                id: function(val1) {
+                    var flagNull1;
+                    if (val1 == '') {
+                        flagNull1 = true;
+                    } else {
+                        flagNull1 = false;
+                    };
+                    var flag1 = this.music.some(function(item) {
+                        return item.id == val1; //返回布尔值
+                    });
+                    if (flag1 || flagNull1) {
+                        this.submitFlag = true;
+                    } else {
+                        this.submitFlag = false;
+                    };
+                },
+                name: function(val) {
+                    var flagNull;
+                    if (val == '') {
+                        flagNull = true;
+                    } else {
+                        flagNull = false;
+                    };
+                    var flag = this.music.some(function(item) {
+                        return item.name == val; //返回布尔值
+                    });
+                    if (flag || flagNull) {
+                        this.submitFlag = true;
+                    } else {
+                        this.submitFlag = false;
+                    };
+                }
+            },
+            //生命周期
+            mounted: function() {
+                //该生命周期钩子函数被触发的时候，模板就开始可以用了
+                //一般此时用于获取后台的数据，然后把数据填充到模板
+                var data = [{
+                    id: 1,
+                    name: '心动',
+                    date: new Date()
+                }, {
+                    id: 2,
+                    name: '光点',
+                    date: new Date()
+                }, {
+                    id: 3,
+                    name: '被风吹过的夏天',
+                    date: new Date()
+                }, {
+                    id: 4,
+                    name: '克卜勒',
+                    date: new Date()
+                }];
+                this.music = data;
+            }
+        })
+    </script>
+</body>
+
+</html>
