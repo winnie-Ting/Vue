@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>兄弟组件</title>
+</head>
+
+<body>
+    <div class="box">
+        <div>{{msg}}</div>
+        <com-a></com-a>
+        <com-b></com-b>
+    </div>
+
+    <script src="vue.js"></script>
+    <script>
+        var hub = new Vue();
+
+        Vue.component('com-a', {
+                props: [],
+                data: function() {
+                    return {
+                        num: 0
+                    }
+                },
+                template: `
+                <div>
+                    <p>我是com-a,我有{{num}}个糖果</p>
+                    <button @click='handle'>按钮</button>
+                </div>
+            `,
+                methods: {
+                    handle: function() {
+                        hub.$emit('b-event', 2) //触发想要监听的事件
+                    }
+                },
+                //钩子函数
+                mounted: function() {
+                    //监听事件
+                    hub.$on('a-event', (val) => {
+                        //val传来的是兄弟组件的值
+                        this.num += val
+                    })
+                }
+            }),
+            Vue.component('com-b', {
+                props: [],
+                data: function() {
+                    return {
+                        num: 0
+                    }
+                },
+                template: `
+                <div>
+                    <p>我是com-b,我有{{num}}个苹果</p>
+                    <button @click='handle'>按钮</button>
+                </div>
+            `,
+                methods: {
+                    handle: function() {
+                        //触发兄弟组件的事件
+                        hub.$emit('a-event', 1)
+                    }
+                },
+                //钩子函数
+                mounted: function() {
+                    //监听事件
+                    hub.$on('b-event', (val) => {
+                        //val传来的是兄弟组件的值
+                        this.num += val
+                    })
+                }
+            })
+
+        var vm = new Vue({
+            el: '.box',
+            data: {
+                msg: '兄弟组件'
+            },
+            methods: {
+
+            }
+        })
+    </script>
+</body>
+
+</html>
