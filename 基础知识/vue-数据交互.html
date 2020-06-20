@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>数据交互</title>
+</head>
+
+<body>
+    <div class="box">
+        <div :style='{fontSize:font+"px"}'>{{pmsg}}</div>
+        <second :title="pstr" @enlarge-font='handle' @enlarge-font2='handle2($event)'></second>
+    </div>
+
+    <script src="jquery-1.12.4.js"></script>
+    <script src="vue.js"></script>
+    <script>
+        Vue.component('second', {
+            props: ['title'],
+            data: function() {
+                return {
+                    msg: 'self content'
+                }
+            },
+            template: `
+                <div>
+                    <button @click='$emit("enlarge-font")'>父组件字体加大</button>
+                    <button @click='$emit("enlarge-font2",0.1)'>父组件字体加大2</button>
+                </div>
+            `
+        })
+        var vm = new Vue({
+            el: '.box',
+            data: {
+                pmsg: 'parent content',
+                pstr: 'hello',
+                font: 10
+            },
+            methods: {
+                handle: function() {
+                    this.font += 10;
+                },
+                handle2: function(val) {
+                    this.font += val;
+                }
+            }
+        })
+    </script>
+</body>
+
+</html>

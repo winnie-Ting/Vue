@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>vue案例</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+
+<body>
+    <div class="container">
+        <div class="tab">
+            <ul>
+                <li v-on:mouseover='change(index)' :class='currentIndex==index?"active":""' :key='item.id' v-for='(item,index) in list'>{{item.title}}</li>
+            </ul>
+            <div :class='currentIndex==index?"current":""' :key='item.id' v-for='(item,index) in list'><img :src="item.path"></div>
+        </div>
+    </div>
+
+    <script src="js/jquery-1.12.4.js"></script>
+    <script src="js/vue.js"></script>
+    <script>
+        var vm = new Vue({
+            el: '.container',
+            data: {
+                currentIndex: 0,
+                list: [{
+                    id: 1,
+                    title: 'xz',
+                    path: 'images/xz.JPG'
+                }, {
+                    id: 2,
+                    title: 'ok',
+                    path: 'images/ok.jpg'
+                }, {
+                    id: 3,
+                    title: 'cat',
+                    path: 'images/cat.jpeg'
+                }]
+            },
+            methods: {
+                change: function(index) {
+                    //本质是操作类名，实现切换
+                    //通过操作currentIndex
+                    this.currentIndex = index;
+                }
+            }
+        })
+    </script>
+</body>
+
+</html>

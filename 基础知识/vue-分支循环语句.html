@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        [v-cloak] {
+            display: none;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="content">
+        <div v-cloak v-if='item.age>=18' v-for='(item,index) in person'>
+            <span>{{item.uName}}</span>
+            <span>---</span>
+            <span>{{item.age}}</span>
+            <span>---</span>
+            <span>{{item.gender}}</span>
+        </div>
+    </div>
+    <script src="js/vue.js"></script>
+    <script src="js/jquery-1.12.4.js"></script>
+    <script>
+        var vm = new Vue({
+            el: '.content',
+            data: {
+                person: [{
+                    uName: 'xz',
+                    age: 28,
+                    gender: 'male'
+                }, {
+                    uName: 'xz1',
+                    age: 3,
+                    gender: 'male'
+                }, {
+                    uName: 'xz2',
+                    age: 18,
+                    gender: 'male'
+                }]
+            },
+            methods: {
+
+            }
+        })
+    </script>
+</body>
+
+</html>

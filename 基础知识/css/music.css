@@ -1,0 +1,42 @@
+.lib {
+    margin: 100px auto;
+    width: 530px;
+    text-align: center;
+}
+
+.lib table {
+    width: 100%;
+    border-top: 1px solid #C2D89A;
+    border-collapse: collapse;
+}
+
+.lib th,
+td {
+    padding: 10px;
+    border: 1px dashed pink;
+    height: 35px;
+    line-height: 35px;
+}
+
+.lib th {
+    background-color: pink;
+}
+
+.lib a {
+    text-decoration: none;
+    color: brown;
+}
+
+.lib .nav {
+    padding-bottom: 10px;
+    padding-top: 10px;
+    background-color: #f3dcab;
+}
+
+.lib .total {
+    height: 25px;
+    width: 100%;
+    line-height: 25px;
+    background-color: #f3dcab;
+    border-top: 1px solid #C2D89A;
+}

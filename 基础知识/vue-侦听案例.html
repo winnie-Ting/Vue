@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>watch</title>
+    <style>
+        [v-cloak] {
+            display: none;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="content">
+        <span>用户名：</span>
+        <span><input type="text" v-model.lazy='uName'></span>
+        <span v-cloak>{{warning}}</span>
+    </div>
+    <script src="js/jquery-1.12.4.js"></script>
+    <script src="js/vue.js"></script>
+    <script>
+        var vm = new Vue({
+            el: '.content',
+            data: {
+                uName: '',
+                warning: ''
+            },
+            methods: {
+                checkName: function(uName) {
+                    var that = this;
+                    setTimeout(function() {
+                        //模拟接口调用
+                        if (uName == 'admin') {
+                            that.warning = 'exited';
+                        } else {
+                            that.warning = 'success';
+                        }
+                    }, 2000);
+                }
+            },
+            watch: {
+                uName: function(val) {
+                    this.checkName(val);
+                    this.warning = 'waiting';
+                }
+            }
+        });
+    </script>
+</body>
+
+</html>

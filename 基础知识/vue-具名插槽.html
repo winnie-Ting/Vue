@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>具名插槽</title>
+</head>
+
+<body>
+    <div class="box">
+        <base-layout>
+            <h1 slot="header">标题内容</h1>
+            <p>主要内容</p>
+            <p>主要内容</p>
+            <p slot="footer">底部内容</p>
+        </base-layout>
+        <base-layout>
+            <template slot="header">
+                <h2>标题内容</h2>
+            </template>
+            <template>
+                <p>主要内容</p>
+                <p>主要内容</p>
+            </template>
+            <template slot="footer">
+                <p>底部内容</p>
+            </template>
+        </base-layout>
+    </div>
+
+    <script src="vue.js"></script>
+    <script>
+        Vue.component('base-layout', {
+            template: `
+                <div>
+                    <header>
+                        <slot name="header"></slot>
+                    </header>
+                    <main>
+                        <slot></slot>
+                    </main>
+                    <footer>
+                        <slot name="footer"></slot>
+                    </footer>
+                </div>
+            `
+        })
+        var vm = new Vue({
+            el: '.box',
+            data: {
+
+            },
+            methods: {
+
+            }
+        })
+    </script>
+</body>
+
+</html>

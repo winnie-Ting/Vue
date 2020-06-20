@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>事件绑定</title>
+</head>
+
+<body>
+    <div class="content">
+        <div>{{num}}</div>
+        <button v-on:click='num++'>按钮</button>
+        <button @click='num++'>btn2</button>
+        <button @click='sum'>btn3</button>
+        <button @click='sum()'>btn4</button>
+    </div>
+
+
+    <script src="js/jquery-1.12.4.js"></script>
+    <script src="js/vue.js"></script>
+    <script>
+        var vm = new Vue({
+            el: '.content',
+            data: {
+                num: 0
+            },
+            methods: {
+                sum: function() {
+                    //this-->Vue的实例对象
+                    this.num++;
+                }
+            }
+
+        });
+    </script>
+</body>
+
+</html>

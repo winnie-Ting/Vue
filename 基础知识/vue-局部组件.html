@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>局部组件</title>
+</head>
+
+<body>
+    <div class="container">
+        <hello-a></hello-a>
+        <hello-b></hello-b>
+        <hello-c></hello-c>
+    </div>
+
+    <script src="jquery-1.12.4.js"></script>
+    <script src="vue.js"></script>
+    <script>
+        // 局部组件:只可以在注册它的父组件中使用，其他都不行
+        var HelloA = {
+            data: function() {
+                return {
+                    msg: 'hello a'
+                }
+            },
+            template: `<div>{{msg}}</div>`,
+        };
+        var HelloB = {
+            data: function() {
+                return {
+                    msg: 'hello b'
+                }
+            },
+            template: `<div>{{msg}}</div>`,
+        };
+        var HelloC = {
+            data: function() {
+                return {
+                    msg: 'hello c'
+                }
+            },
+            template: `<div>
+                        {{msg}}
+                    </div>
+                        `,
+        }
+        var vm = new Vue({
+            el: '.container',
+            data: {
+
+            },
+            components: {
+                'hello-a': HelloA,
+                'hello-b': HelloB,
+                'hello-c': HelloC
+            }
+        })
+    </script>
+</body>
+
+</html>

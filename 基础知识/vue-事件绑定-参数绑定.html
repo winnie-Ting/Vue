@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>参数传递</title>
+</head>
+
+<body>
+    <div class="content">
+        <div>{{num}}</div>
+        <button @click='handle1'>btn1</button>
+        <button @click='handle2($event)'>btn2</button>
+    </div>
+    <script src="js/jquery-1.12.4.js"></script>
+    <script src="js/vue.js"></script>
+    <script>
+        // 直接写函数名，默认传递的参数为事件对象
+        // 调用函数，传递事件参数的时候，事件对象要写在最后$event
+        var vm = new Vue({
+            el: '.content',
+            data: {
+                num: 0
+            },
+            methods: {
+                handle1: function(event) {
+                    console.log(event.target.innerText);
+                },
+                handle2: function(event) {
+                    console.log(event.target.tagName);
+                }
+            }
+        });
+    </script>
+</body>
+
+</html>
