@@ -1,0 +1,16 @@
+li {
+    list-style: none;
+}
+
+::placeholder {
+    color: blue;
+}
+
+#box {
+    width: 580px;
+    height: 300px;
+    margin-top: 20px;
+    background-color: pink;
+    background: url('../images/xz.jpg');
+    background-size: 580px auto;
+}
